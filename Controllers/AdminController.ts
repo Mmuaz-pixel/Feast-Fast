@@ -37,9 +37,19 @@ export const CreateVandor = async(req: Request, res: Response, next: NextFunctio
 
 export const getVandors = async(req: Request, res: Response, next: NextFunction) => {
 
+	const vandors = await Vandor.find(); 
+	return res.json(vandors); 
 }
 
 export const getVandorById = async(req: Request, res: Response, next: NextFunction) => {
+	const id = req.params.id; 
+	const vandor = await Vandor.findById(id); 
 
+	if(!vandor)
+	{
+		return res.status(404).send({"message": `vandor with id ${id} doesn't exist`})
+	}
+
+	return res.json(vandor); 
 }
 
