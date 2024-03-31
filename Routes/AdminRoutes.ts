@@ -4,7 +4,7 @@ import { CreateVandor, getVandorById, getVandors } from '../Controllers';
 const router = express.Router();
 
 router.post('/createVandor', CreateVandor); 
-router.get('/vandors', getVandorById); 
-router.get('/vandor/:id', getVandors); 
+router.get('/vandor/:id', getVandorById); 
+router.get('/vandors', getVandors); 
 
 export { router as AdminRouter};

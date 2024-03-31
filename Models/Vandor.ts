@@ -8,7 +8,7 @@ interface VandorDoc extends Document {
 	address: string, 
 	phone: string, 
 	email: string, 
-	password: string , 
+	password: string, 
 	salt: string, 
 	serviceAvailable: string, 
 	coverImages: [string], 
@@ -34,6 +34,16 @@ const VandorSchema = new Schema ({
 	// 	ref: 'food'
 	// }], 
 }, {
+	toJSON: {
+		transform(doc, ret){
+			// db will not return these properties
+			delete ret.password;  
+			delete ret.salt; 
+			delete ret.__v; 
+			delete ret.createdAt; 
+			delete ret.updatedAt; 
+		}
+	},
 	timestamps: true
 })
 
