@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import { VandorLoginInput } from "../dto"
 import { Vandor } from "../Models";
-import { ValidatePassword } from "../Utility";
+import { GenerateSignature, ValidatePassword } from "../Utility";
 
 export const VandorLogin = async(req: Request, res: Response, next: NextFunction) => {
 
@@ -15,7 +15,14 @@ export const VandorLogin = async(req: Request, res: Response, next: NextFunction
 
 		if(check)
 		{
-			// login logic goes here
+			const token = GenerateSignature({
+				_id: existingVandor.id, 
+				name: existingVandor.name, 
+				email: existingVandor.email, 
+				foodTypes: existingVandor.foodType
+			})
+
+			return res.json(token); 
 		}
 		else 
 		{
@@ -26,8 +33,25 @@ export const VandorLogin = async(req: Request, res: Response, next: NextFunction
 
 export const GetVandorProfile = async(req: Request, res: Response, next: NextFunction) => {
 
+	const user = req.user; 
+	if(user)
+	{
+		const existingVandor = await Vandor.findById(user._id); 
+		if(existingVandor)
+		{
+			return res.json(existingVandor); 
+		}
+		else 
+		{
+			return res.json
+		}
+	}
 }
 
 export const UpdateVandorProfile = async(req: Request, res: Response, next: NextFunction) => {
+	
+}
+
+export const UpdateVandorService = async(req: Request, res: Response, next: NextFunction) => {
 	
 }
