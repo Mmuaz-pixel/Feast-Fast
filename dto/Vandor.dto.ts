@@ -18,5 +18,13 @@ export interface VandorPayLoad {
 	_id: string; 
 	name: string; 
 	email: string; 
-	foodTypes: [string]; 
+	foodType: [string]; 
+}
+
+export interface EditVandorInput{
+	name: string, 
+	foodType: [string], 
+	address: string, 
+	phone: string, 
+	coverImages: [string],
 }

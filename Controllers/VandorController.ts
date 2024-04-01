@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { VandorLoginInput } from "../dto"
+import { EditVandorInput, VandorLoginInput } from "../dto"
 import { Vandor } from "../Models";
 import { GenerateSignature, ValidatePassword } from "../Utility";
 
@@ -19,7 +19,7 @@ export const VandorLogin = async(req: Request, res: Response, next: NextFunction
 				_id: existingVandor.id, 
 				name: existingVandor.name, 
 				email: existingVandor.email, 
-				foodTypes: existingVandor.foodType
+				foodType: existingVandor.foodType
 			})
 
 			return res.json(token); 
@@ -49,7 +49,35 @@ export const GetVandorProfile = async(req: Request, res: Response, next: NextFun
 }
 
 export const UpdateVandorProfile = async(req: Request, res: Response, next: NextFunction) => {
-	
+	const {name, foodType, address, phone, coverImages} = <EditVandorInput>req.body; 
+
+	const user = req.user; 
+
+	if(user)
+	{
+		const existingVandor = await Vandor.findById(user._id); 
+
+		if(existingVandor)
+		{
+			existingVandor.name = name;
+			existingVandor.address = address; 
+			existingVandor.foodType = foodType; 
+			existingVandor.phone = phone; 
+			existingVandor.coverImages = coverImages; 
+
+			const savedVandor = await existingVandor.save(); 
+
+			return res.json(savedVandor); 
+		}
+
+		else 
+		{
+			return res.status(404).json({"message": "user not found"})
+		}
+	}else 
+	{
+		return res.status(404).json({"message": "user not found"})
+	}
 }
 
 export const UpdateVandorService = async(req: Request, res: Response, next: NextFunction) => {
