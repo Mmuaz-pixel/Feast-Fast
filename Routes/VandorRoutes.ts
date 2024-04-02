@@ -1,5 +1,5 @@
 import express from 'express';
-import { GetVandorProfile, VandorLogin, UpdateVandorProfile, UpdateVandorService } from '../Controllers';
+import { GetVandorProfile, VandorLogin, UpdateVandorProfile, UpdateVandorService, addFood, getFood } from '../Controllers';
 import { Authenticate } from '../Middlewares';
 
 const router = express.Router();
@@ -11,5 +11,8 @@ router.use(Authenticate);
 router.get('/profile', GetVandorProfile); 
 router.patch('/profile', UpdateVandorProfile); 
 router.patch('/service', UpdateVandorService); 
+
+router.get('/food', getFood); 
+router.patch('/food', addFood)
 
 export { router as VandorRouter}

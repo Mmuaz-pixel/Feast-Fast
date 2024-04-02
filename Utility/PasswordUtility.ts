@@ -17,7 +17,7 @@ export const ValidatePassword = async(inputPassword: string, savedPassword: stri
 }
 
 export const GenerateSignature = (payload: VandorPayLoad) => {
-	return jwt.sign(payload, process.env.JWT_KEY as string, {expiresIn: '1h'})
+	return jwt.sign(payload, process.env.JWT_KEY as string, {expiresIn: '24h'})
 }
 
 export const ValidateSignature = async(req: Request) => {
